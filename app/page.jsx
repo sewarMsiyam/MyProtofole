@@ -42,7 +42,6 @@ const Home = () => {
       <section id="work">
         <Work />
       </section>
-
       <Contact />
 
     </>

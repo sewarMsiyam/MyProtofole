@@ -14,11 +14,11 @@ const Photo = () => {
             opacity: 1, 
             transition: { 
               delay: 0.05, 
-              duration: 0.4, 
+              duration: 0.1, 
               ease: "easeInOut" 
             }
           }}
-          className="absolute inset-0 p-10 z-10"
+          className="absolute inset-0 z-10"
         >
           <div className="w-full h-full relative overflow-hidden rounded-full flex items-center justify-center">
             <Image 
@@ -27,9 +27,9 @@ const Photo = () => {
               quality={100} 
               fill 
               alt="Ban" 
-              className="object-contain scale-[1.2] p-"
+              className="object-contain scale-[1.2] "
               style={{
-                transform: 'scale(1.2)',
+                transform: 'scale(1)',
                 transformOrigin: 'center center'
               }}
             />
