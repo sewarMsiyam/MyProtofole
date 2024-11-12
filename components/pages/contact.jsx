@@ -1,25 +1,24 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectItem,SelectGroup,SelectLabel,SelectContent,SelectTrigger,SelectValue } from "@/components/ui/select"
-import {FaPhoneAlt,FaEnvelope , FaMapMarkedAlt} from "react-icons/fa"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {FaPhoneAlt,FaEnvelope , FaMapMarkedAlt} from "react-icons/fa";
 
 const info=[
   {
     icon:<FaPhoneAlt />,
     title:"Phone",
-    description:"+970 568 833 020"
+    description:"+970 568 833 020",
   },
   {
     icon:<FaEnvelope />,
     title:"Email",
-    description:"sewarsiyam1@gmail.com"
+    description:"sewarsiyam1@gmail.com",
   },
   {
     icon:<FaMapMarkedAlt />,
     title:"Address",
-    description:"gaza"
+    description:"gaza",
   },
 ]
 
@@ -33,7 +32,7 @@ const contact = () => {
 
           <div className="xl:h-[54%] order-2 xl:order-none">
             <form className="flex flex-col gap-6 p-10 bg-[#f3f3f3] dark:bg-[#27272c] rounded-xl">
-              <h3 className="text-4xl text-accent">Let's work together</h3>
+              <h3 className="text-4xl text-accent">Let&apos;s work together</h3>
               <p className="text-dark/60 dark:text-white/60">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. A alias deleniti sed sapiente cupiditate suscipit veritatis, dolorum amet voluptate quas hic repellendus voluptatibus mollitia quam facere placeat natus! Exercitationem, velit.
               </p>
@@ -69,4 +68,4 @@ const contact = () => {
   )
 }
 
-export default contact
+export default contact;

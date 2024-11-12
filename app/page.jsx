@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button"
-import { FiDownload } from "react-icons/fi"
-import Social from "@/components/Social"
-import Photo from "@/components/Photo"
-import Stats from "@/components/Stats"
-import Resume from "@/components/pages/resume"
-import Work from "@/components/pages/work"
-import Contact from "@/components/pages/contact"
+import { Button } from "@/components/ui/button";
+import { FiDownload } from "react-icons/fi";
+import Social from "@/components/Social";
+import Photo from "@/components/Photo";
+import Stats from "@/components/Stats";
+import Resume from "@/components/pages/resume";
+import Work from "@/components/pages/work";
+import Contact from "@/components/pages/contact";
 const Home = () => {
   return (
     <>
@@ -15,7 +15,7 @@ const Home = () => {
             <div className="text-center xl:text-left order-2 xl:order-none">
               <span>Front-end Developer</span>
               <h1 className="h1 capitalize">
-                Hello I'm <br /> <span className="text-accent">SEWAR SIYAM</span>
+                Hello I&apos;m <br /> <span className="text-accent">SEWAR SIYAM</span>
               </h1>
               <p className="max-w-[500px] mb-9 text-justify text-primary/80 dark:text-white/80">I excel at creating user-friendly and visually appealing interfaces, and I have experience with a variety of programming languages and technologies.</p>
 
@@ -49,5 +49,5 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
 

@@ -18,7 +18,7 @@ const Photo = () => {
               ease: "easeInOut" 
             }
           }}
-          className="absolute inset-0 z-10"
+          className="absolute inset-0 p-10 z-10"
         >
           <div className="w-full h-full relative overflow-hidden rounded-full flex items-center justify-center">
             <Image 
