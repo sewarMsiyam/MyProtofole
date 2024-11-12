@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkedAlt } from "react-icons/fa";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const info = [
   {
@@ -33,7 +33,19 @@ const Contact = () => {
     message: ''
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // إضافة useEffect لمراقبة isSubmitted
+  useEffect(() => {
+    let timer;
+    if (isSubmitted) {
+      timer = setTimeout(() => {
+        setIsSubmitted(false);
+      }, 60000); // 60000 milliseconds = 1 minute
+    }
+    return () => clearTimeout(timer); // تنظيف المؤقت عند unmount
+  }, [isSubmitted]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,7 +81,9 @@ const Contact = () => {
         message: ''
       });
 
-      alert('تم حفظ البيانات بنجاح!');
+      // إظهار الرسالة
+      setIsSubmitted(true);
+
     } catch (error) {
       console.error('Error saving data:', error);
       alert('حدث خطأ أثناء حفظ البيانات');
@@ -130,14 +144,25 @@ const Contact = () => {
                 onChange={handleInputChange}
                 required
               />
-              <Button 
-                type="submit" 
-                size="lg" 
-                className="max-w-52"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Sending...' : 'Send Message'}
-              </Button>
+              <div className="space-y-4">
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="max-w-52"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Sending...' : 'Send Message'}
+                </Button>
+                
+                {isSubmitted && (
+                  <div className="text-accent dark:text-accent text-sm mt-2 animate-fade-in">
+                    يزم م حبك غير تبعت رسالة هان !!, 
+                    ابعتها ع الايميل او واتساب بشوفها برضو تقلقش
+                    <br />
+                    😌😉مش عاملاها لسا اصبر عليا يومين تلاثة عبين م افضى والاقي طريقة بعملك اياها ولا يهمك  
+                  </div>
+                )}
+              </div>
             </form>
           </div>
           <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
