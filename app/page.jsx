@@ -88,7 +88,7 @@ const Home = () => {
       <section id="resume" className="mb-32">
         <Resume />
       </section>
-      <section id="work">
+      <section id="work" className="mb-10">
         <Work />
       </section>
       <Contact />

@@ -12,30 +12,30 @@ const projects = [
   {
     num: "01",
     category: 'frontend',
-    title: "project 1",
-    description: "description",
+    title: "sewaar",
+    description: "Sewaar is an online platform for private tutoring, helping students easily book expert tutors across school and university levels through a simple registration and booking process.",
     stack: [
-      { name: "Html5" },
-      { name: "css" },
-      { name: "js" },
+      { name: "NextJs" },
+      { name: "tailwindcss" },
+      { name: "vercel" },
     ],
-    image: '/assets/work/image.png',
-    live: "",
+    image: '/assets/work/sewaar.png',
+    live: "https://www.sewaar.com/",
     github: ""
   },
   {
     num: "02",
     category: 'frontend',
-    title: "project 1",
-    description: "description",
+    title: "KAYA Shop",
+    description: "KAYA is an interactive web project showcasing a dynamic and visually appealing design with a modern and minimalist approach. It offers an engaging user experience through animation effects and a clean, user-friendly interface. ",
     stack: [
-      { name: "Html5" },
-      { name: "css" },
-      { name: "js" },
+      { name: "bootstrap 5" },
+      { name: "swiper" },
+      { name: "AOS" },
     ],
-    image: '/assets/work/image.png',
-    live: "",
-    github: ""
+    image: '/assets/work/kaya_shoop.png',
+    live: "https://sewarmsiyam.github.io/KAYA/",
+    github: "https://github.com/sewarMsiyam/KAYA"
   },
 ]
 
@@ -70,7 +70,7 @@ const Work = () => {
               </ul>
               <div className="border border-white/20"></div>
               <div className="flex items-center gap-4">
-                <Link href={project.live}>
+                <Link  href={project.live} target="_blank" rel="noopener noreferrer">
                   <TooltipProvider delayDuration={100}>
                     <Tooltip>
                       <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-primary/5 dark:bg-white/5 flex justify-center items-center group">
@@ -82,18 +82,20 @@ const Work = () => {
                     </Tooltip>
                   </TooltipProvider>
                 </Link>
-                <Link href={project.github}>
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-primary/5 dark:bg-white/5 flex justify-center items-center group">
-                        <BsGithub className="text-primary dark:text-white text-3xl group-hover:text-accent" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>github repository</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
+                {project.github && (
+                  <Link href={project.github} target="_blank" rel="noopener noreferrer">
+                    <TooltipProvider delayDuration={100}>
+                      <Tooltip>
+                        <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-primary/5 dark:bg-white/5 flex justify-center items-center group">
+                          <BsGithub className="text-primary dark:text-white text-3xl group-hover:text-accent" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>github repository</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
