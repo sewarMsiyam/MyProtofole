@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkedAlt } from "react-icons/fa";
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const info = [
   {
@@ -25,68 +26,35 @@ const info = [
 ];
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const form = useRef();
   const [isLoading, setIsLoading] = useState(false);
-
-  // إضافة useEffect لمراقبة isSubmitted
-  useEffect(() => {
-    let timer;
-    if (isSubmitted) {
-      timer = setTimeout(() => {
-        setIsSubmitted(false);
-      }, 60000); // 60000 milliseconds = 1 minute
-    }
-    return () => clearTimeout(timer); // تنظيف المؤقت عند unmount
-  }, [isSubmitted]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const [status, setStatus] = useState({ type: '', message: '' });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+      const result = await emailjs.sendForm(
+        'service_whfp98r',
+        'template_fa2hfj6',
+        form.current,
+        'I0kFTZK5VScIRNEtx'
+      );
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      if (result.text === 'OK') {
+        setStatus({
+          type: 'success',
+          message: 'تم إرسال رسالتك بنجاح!, شكرا لك '
+        });
+        form.current.reset();
       }
-
-      // تنظيف النموذج
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
-
-      // إظهار الرسالة
-      setIsSubmitted(true);
-
     } catch (error) {
-      console.error('Error saving data:', error);
-      alert('حدث خطأ أثناء حفظ البيانات');
+      console.error('Error:', error);
+      setStatus({
+        type: 'error',
+        message: 'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.'
+      });
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +65,7 @@ const Contact = () => {
       <div className="container mx-auto">
         <div className="flex flex-col xl:flex-row gap-[30px]">
           <div className="xl:h-[54%] order-2 xl:order-none">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 p-10 bg-[#f3f3f3] dark:bg-[#27272c] rounded-xl">
+            <form ref={form} onSubmit={handleSubmit} className="flex flex-col gap-6 p-10 bg-[#f3f3f3] dark:bg-[#27272c] rounded-xl">
               <h3 className="text-4xl text-accent">Let&apos;s work together</h3>
               <p className="text-dark/60 dark:text-white/60">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
@@ -105,61 +73,68 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Input 
                   type="text"
-                  name="firstName"
+                  name="from_name"
                   placeholder="First Name"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
                   required
+                  className="focus:ring-accent/50"
                 />
                 <Input 
                   type="text"
-                  name="lastName"
+                  name="last_name"
                   placeholder="Last Name"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
                   required
+                  className="focus:ring-accent/50"
                 />
                 <Input 
                   type="email"
-                  name="email"
+                  name="reply_to"
                   placeholder="Email address"
-                  value={formData.email}
-                  onChange={handleInputChange}
                   required
+                  className="focus:ring-accent/50"
                 />
                 <Input 
                   type="tel"
-                  name="phone"
+                  name="phone_number"
                   placeholder="Phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
                   required
+                  className="focus:ring-accent/50"
                 />
               </div>
               <Textarea 
                 name="message"
-                className="h-[200px]"
+                className="h-[200px] focus:ring-accent/50"
                 placeholder="Type your message"
-                value={formData.message}
-                onChange={handleInputChange}
                 required
               />
               <div className="space-y-4">
                 <Button 
                   type="submit" 
                   size="lg" 
-                  className="max-w-52"
+                  className={`max-w-52 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''}`}
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Sending...' : 'Send Message'}
+                  {isLoading ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : (
+                    'Send Message'
+                  )}
                 </Button>
                 
-                {isSubmitted && (
-                  <div className="text-accent dark:text-accent text-sm mt-2 animate-fade-in">
-                    يزم م حبك غير تبعت رسالة هان !!, 
-                    ابعتها ع الايميل او واتساب بشوفها برضو تقلقش
-                    <br />
-                    😌😉مش عاملاها لسا اصبر عليا يومين تلاثة عبين م افضى والاقي طريقة بعملك اياها ولا يهمك  
+                {status.message && (
+                  <div 
+                    className={`text-sm mt-2 py-2 px-4 rounded-md ${
+                      status.type === 'success' 
+                        ? 'bg-green-50 text-green-500 dark:bg-green-900/10' 
+                        : 'bg-red-50 text-red-500 dark:bg-red-900/10'
+                    } transition-all duration-300 ease-in-out`}
+                  >
+                    {status.message}
                   </div>
                 )}
               </div>
