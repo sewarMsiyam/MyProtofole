@@ -19,7 +19,7 @@ const projects = [
       { name: "tailwindcss" },
       { name: "vercel" },
     ],
-    image: '/assets/work/sewaar.png',
+    image: '/assets/work/sewaar1.jpg',
     live: "https://www.sewaar.com/",
     github: ""
   },
@@ -27,7 +27,7 @@ const projects = [
     num: "02",
     category: 'frontend',
     title: "KAYA Shop",
-    description: "KAYA is an interactive web project showcasing a dynamic and visually appealing design with a modern and minimalist approach. It offers an engaging user experience through animation effects and a clean, user-friendly interface. ",
+    description: "KAYA is an interactive web project showcasing a dynamic and visually appealing design with a modern and minimalist approach. It offers an engaging user experience through animation effects and a clean. ",
     stack: [
       { name: "bootstrap 5" },
       { name: "swiper" },
@@ -36,6 +36,35 @@ const projects = [
     image: '/assets/work/kaya_shoop.png',
     live: "https://sewarmsiyam.github.io/KAYA/",
     github: "https://github.com/sewarMsiyam/KAYA"
+  },
+  {
+    num: "03",
+    category: 'frontend',
+    title: "Highnox Hotel",
+    description: "Highnox is a hotel management dashboard I built from scratch, designed to manage bookings and real-time data with an intuitive, user-friendly interface. ",
+    stack: [
+      { name: "bootstrap" },
+      { name: "chart" },
+      { name: "datepicker" },
+      { name: "...." },
+    ],
+    image: '/assets/work/highnox.png',
+    live: "https://sewarmsiyam.github.io/Highnox/",
+    github: "https://github.com/sewarMsiyam/Highnox"
+  },
+  {
+    num: "03",
+    category: 'frontend',
+    title: "oloom plus",
+    description: "Oloom Plus is an educational platform offering interactive courses in subjects like science and mathematics, with a focus on enhancing student learning.",
+    stack: [
+      { name: "bootstrap 5" },
+      { name: "swiper" },
+      { name: "AOS" },
+    ],
+    image: '/assets/work/oloomplus.png',
+    live: "https://oloomplus.com/",
+    // github: "https://github.com/sewarMsiyam/Highnox"
   },
 ]
 
@@ -57,7 +86,7 @@ const Work = () => {
                 {project.num}
               </div>
               <h2 className="text-[42px] font-bold leading-none text-primary dark:text-white group-hover:text-accent transition-all duration-500 capitalize">
-                {project.category} project
+                {project.title} 
               </h2>
               <p className="text-primary/60 dark:text-white/60">{project.description}</p>
               <ul className="flex gap-4">
