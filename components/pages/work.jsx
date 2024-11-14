@@ -53,7 +53,7 @@ const projects = [
     github: "https://github.com/sewarMsiyam/Highnox"
   },
   {
-    num: "03",
+    num: "04",
     category: 'frontend',
     title: "oloom plus",
     description: "Oloom Plus is an educational platform offering interactive courses in subjects like science and mathematics, with a focus on enhancing student learning.",
