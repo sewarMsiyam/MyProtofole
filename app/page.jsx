@@ -8,6 +8,7 @@ import Stats from "@/components/Stats";
 import Resume from "@/components/pages/resume";
 import Work from "@/components/pages/work";
 import Contact from "@/components/pages/contact";
+import DancingText from "@/components/DancingText";
 import { useState, useEffect } from 'react';
 
 const Home = () => {
@@ -44,7 +45,10 @@ const Home = () => {
         <div className="container mx-auto h-full">
           <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
             <div className="text-center xl:text-left order-2 xl:order-none">
-              <span>Front-end Developer</span>
+              {/* <span>Front-end Developer</span> */}
+              <div>
+                <DancingText />
+              </div>
               <h1 className="h1 capitalize">
                 Hello I&apos;m <br /> <span className="text-accent">SEWAR SIYAM</span>
               </h1>
