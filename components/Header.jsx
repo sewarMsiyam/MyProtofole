@@ -1,31 +1,82 @@
-import Link from "next/link"
-import {Button} from "./ui/button"
-import Nav from "./Nav"
-import MobileNav from "./MobileNav"
-import { ThemeToggle } from "./theme-toggle"
+"use client";
 
-const Header=() =>{
-  return (
-    <header className="py-8 pt-8 xl:pb-12 text-primary dark:text-white">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/">
-          <h1 className="text-4xl font-semibold tracking-tighter	">
-          sewarDev/&gt;<span className="text-accent">.</span>
-          </h1>
-        </Link>
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Nav from "./Nav";
+import MobileNav from "./MobileNav";
+import { ThemeToggle } from "./theme-toggle";
+import { navLinks } from "./navLinks";
+import { cn } from "@/lib/utils";
 
-        <div className="hidden xl:flex items-center gap-8">
-          <Nav />
-          <ThemeToggle />
-        </div>
+// Tracks which section is currently in view so the nav can highlight it.
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0]);
 
-        <div className="xl:hidden">
-          <MobileNav />
-        </div>
-       
-      </div>
-    </header>
-  )
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [ids]);
+
+  return active;
 }
 
-export default Header
+const sectionIds = navLinks.map((l) => l.id);
+
+const Header = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const active = useActiveSection(sectionIds);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <header className="sticky top-0 z-40 pt-4">
+      <div className="container mx-auto">
+        <div
+          className={cn(
+            "flex justify-between items-center rounded-full pl-6 pr-3 py-3 transition-all duration-500",
+            scrolled ? "glass shadow-card" : "border border-transparent"
+          )}
+        >
+          <Link href="/#home" className="font-display text-2xl xl:text-3xl font-bold tracking-tight">
+            sewar<span className="text-accent">Dev</span>
+            <span className="font-mono text-coral">/&gt;</span>
+          </Link>
+
+          <div className="hidden xl:flex items-center gap-4">
+            <Nav active={active} />
+            <ThemeToggle />
+            <Link
+              href="/#contact"
+              className="rounded-full bg-fg text-bg px-5 py-2.5 text-sm font-semibold hover:bg-accent transition-colors"
+            >
+              Hire me
+            </Link>
+          </div>
+
+          <div className="xl:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <MobileNav active={active} />
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

@@ -5,20 +5,18 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-base font-semibold ring-offset-white transition-colors ",
-  // "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
+  "group/btn relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-base font-semibold transition-all duration-300 disabled:pointer-events-none disabled:opacity-60",
   {
     variants: {
       variant: {
-        default: "bg-accent text-primary hover:bg-accent-hover",
-        primary: "bg-primary text-white",
-        outline:"border border-accent bg-transparent text-accent hover:bg-accent-hover hover:text-primary",
-
+        default: "bg-accent text-bg hover:bg-accent-hover hover:shadow-glow hover:-translate-y-0.5",
+        primary: "bg-fg text-bg hover:bg-accent hover:-translate-y-0.5",
+        outline: "border border-line/15 bg-fg/[0.03] text-fg hover:border-accent hover:text-accent hover:-translate-y-0.5",
       },
       size: {
         default: "h-[44px] px-6",
-        sm: "h-[48px] px-6",
-        lg: "h-[54px] px-8 uppercase tracking-[2px]",
+        sm: "h-[40px] px-5 text-sm",
+        lg: "h-[54px] px-8",
       },
     },
     defaultVariants: {

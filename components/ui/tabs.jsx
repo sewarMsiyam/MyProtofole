@@ -10,10 +10,7 @@ const Tabs = TabsPrimitive.Root
 const TabsList = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cn(
-      "inline-flex h-auto rounded-md text-primary",
-      className
-    )}
+    className={cn("inline-flex h-auto", className)}
     {...props} />
 ))
 TabsList.displayName = TabsPrimitive.List.displayName
@@ -22,7 +19,7 @@ const TabsTrigger = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center w-full bg-[#f3f3f3] shadow-sm dark:bg-[#232329] justify-center whitespace-nowrap text-primary dark:text-white rounded-lg p-3 text-base font-medium ring-offset-white transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-accent dark:data-[state=active]:bg-accent data-[state=active]:text-primary dark:data-[state=active]:text-primary data-[state=active]:font-bold data-[state=active]:shadow-sm",
+      "group inline-flex items-center gap-3 w-full whitespace-nowrap rounded-2xl border border-line/10 bg-card/60 px-5 py-4 text-base font-medium text-fg/80 transition-all hover:border-accent/50 hover:text-fg disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-accent data-[state=active]:bg-accent data-[state=active]:text-bg data-[state=active]:shadow-glow",
       className
     )}
     {...props} />
@@ -33,7 +30,7 @@ const TabsContent = React.forwardRef(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "min-h-[480px] ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
+      "min-h-[480px] focus-visible:outline-none data-[state=active]:animate-fade-in",
       className
     )}
     {...props} />
