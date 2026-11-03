@@ -1,72 +1,52 @@
 "use client";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
-import { CiMenuFries } from "react-icons/ci";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import Social from "./Social";
+import { navLinks } from "./navLinks";
 
-const links = [
-  {
-    name: "home",
-    path: "/",
-  },
-  {
-    name: "services",
-    path: "/services",
-  },
-  {
-    name: "resume",
-    path: "/resume",
-  },
-  {
-    name: "work",
-    path: "/work",
-  },
-  {
-    name: "contact",
-    path: "/contact",
-  },
-];
-
-function MobileNav() {
-  const pathname = usePathname();
+function MobileNav({ active }) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <Sheet>
-      <SheetTrigger className="flex justify-center items-center">
-        <CiMenuFries className="text-[32px] text-accent" />
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger
+        aria-label="Open menu"
+        className="w-10 h-10 rounded-full bg-accent text-bg flex justify-center items-center"
+      >
+        <HiOutlineMenuAlt3 className="text-xl" />
       </SheetTrigger>
-      <SheetContent>
-        <div className="mt-32 mb-40 text-center text-2xl">
-          <Link href="/">
-            <h1 className="text-4xl font-semibold">
-              sewar<span className="text-accent">.</span>
-            </h1>
+      <SheetContent className="flex flex-col">
+        <SheetTitle className="sr-only">Navigation</SheetTitle>
+        <div className="mt-16 mb-12">
+          <Link href="/#home" onClick={() => setOpen(false)} className="font-display text-3xl font-bold">
+            sewar<span className="text-accent">Dev</span>
+            <span className="font-mono text-coral">/&gt;</span>
           </Link>
         </div>
-        <nav className="flex flex-col justify-center items-center gap-8">
-          {links.map((link, index) => {
-            return (
-              <Link
-                href={link.path}
-                key={index}
-                className={`${
-                  link.path === pathname &&
-                  "text-accent border-b-2 border-accent"
-                } capitalize font-medium hover:text-accent transition-all`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-         </nav>
+        <nav className="flex flex-col gap-2">
+          {navLinks.map((link, i) => (
+            <Link
+              key={link.id}
+              href={`/#${link.id}`}
+              onClick={() => setOpen(false)}
+              className={`group flex items-baseline gap-4 py-3 border-b border-line/10 font-display text-3xl font-bold capitalize transition-colors ${
+                active === link.id ? "text-accent" : "text-fg hover:text-accent"
+              }`}
+            >
+              <span className="font-mono text-xs text-coral">0{i + 1}</span>
+              {link.name}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-auto pt-8">
+          <Social
+            containerStyles="flex gap-3"
+            iconStyles="w-11 h-11 rounded-full border border-line/15 flex justify-center items-center text-fg/80 hover:text-accent hover:border-accent transition-colors"
+          />
+        </div>
       </SheetContent>
     </Sheet>
   );

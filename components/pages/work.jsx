@@ -1,165 +1,171 @@
-'use client'
-import React, { useState } from "react"
-import { Swiper, SwiperSlide } from 'swiper/react'
-import "swiper/css";
-import { BsGithub, BsArrowUpRight } from 'react-icons/bs'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import WorkSlideBtns from "@/components/WorkSlideBtns";
+import { motion } from "framer-motion";
+import { BsGithub, BsArrowUpRight } from "react-icons/bs";
+import SectionHeading from "@/components/SectionHeading";
 
 const projects = [
   {
     num: "01",
-    category: 'frontend',
-    title: "sewaar",
-    description: "Sewaar is an online platform for private tutoring, helping students easily book expert tutors across school and university levels through a simple registration and booking process.",
-    stack: [
-      { name: "NextJs" },
-      { name: "tailwindcss" },
-      { name: "vercel" },
-    ],
-    image: '/assets/work/sewaar1.jpg',
+    category: "Education platform",
+    title: "Sewaar",
+    description:
+      "Sewaar is an online platform for private tutoring, helping students easily book expert tutors across school and university levels through a simple registration and booking process.",
+    stack: ["Next.js", "Tailwind CSS", "Vercel"],
+    image: "/assets/work/sewaar1.jpg",
     live: "https://www.sewaar.com/",
-    github: ""
+    github: "",
   },
   {
     num: "02",
-    category: 'frontend',
+    category: "E-commerce",
     title: "KAYA Shop",
-    description: "KAYA is an interactive web project showcasing a dynamic and visually appealing design with a modern and minimalist approach. It offers an engaging user experience through animation effects and a clean. ",
-    stack: [
-      { name: "bootstrap 5" },
-      { name: "swiper" },
-      { name: "AOS" },
-    ],
-    image: '/assets/work/kaya_shoop.png',
+    description:
+      "KAYA is an interactive web project showcasing a dynamic and visually appealing design with a modern and minimalist approach. It offers an engaging user experience through animation effects and a clean layout.",
+    stack: ["Bootstrap 5", "Swiper", "AOS"],
+    image: "/assets/work/kaya_shoop.png",
     live: "https://sewarmsiyam.github.io/KAYA/",
-    github: "https://github.com/sewarMsiyam/KAYA"
+    github: "https://github.com/sewarMsiyam/KAYA",
   },
   {
     num: "03",
-    category: 'frontend',
+    category: "Dashboard",
     title: "Highnox Hotel",
-    description: "Highnox is a hotel management dashboard I built from scratch, designed to manage bookings and real-time data with an intuitive, user-friendly interface. ",
-    stack: [
-      { name: "bootstrap" },
-      { name: "chart" },
-      { name: "datepicker" },
-      { name: "...." },
-    ],
-    image: '/assets/work/highnox.png',
+    description:
+      "Highnox is a hotel management dashboard I built from scratch, designed to manage bookings and real-time data with an intuitive, user-friendly interface.",
+    stack: ["Bootstrap", "Chart.js", "Datepicker"],
+    image: "/assets/work/highnox.png",
     live: "https://sewarmsiyam.github.io/Highnox/",
-    github: "https://github.com/sewarMsiyam/Highnox"
+    github: "https://github.com/sewarMsiyam/Highnox",
   },
   {
     num: "04",
-    category: 'frontend',
-    title: "oloom plus",
-    description: "Oloom Plus is an educational platform offering interactive courses in subjects like science and mathematics, with a focus on enhancing student learning.",
-    stack: [
-      { name: "bootstrap 5" },
-      { name: "swiper" },
-      { name: "AOS" },
-    ],
-    image: '/assets/work/oloomplus.png',
+    category: "Education platform",
+    title: "Oloom Plus",
+    description:
+      "Oloom Plus is an educational platform offering interactive courses in subjects like science and mathematics, with a focus on enhancing student learning.",
+    stack: ["Bootstrap 5", "Swiper", "AOS"],
+    image: "/assets/work/oloomplus.png",
     live: "https://oloomplus.com/",
-    // github: "https://github.com/sewarMsiyam/Highnox"
+    github: "",
   },
-]
+];
 
-const Work = () => {
-  const [project, setProject] = useState(projects[0]);
-  
-  const handleSlideChange = (swiper) => {
-    const currentIndex = swiper.activeIndex;
-    setProject(projects[currentIndex]);
-  }
+const IconLink = ({ href, label, children }) => (
+  <Link
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={label}
+    title={label}
+    className="w-11 h-11 rounded-full border border-line/15 bg-bg/60 backdrop-blur flex justify-center items-center text-lg text-fg hover:bg-accent hover:text-bg hover:border-accent transition-colors"
+  >
+    {children}
+  </Link>
+);
+
+const ProjectCard = ({ project, index }) => {
+  // first and last cards span the full row; the last one mirrors the layout
+  const featured = index === 0 || index === projects.length - 1;
+  const reversed = featured && index !== 0;
 
   return (
-    <div className="flex items-center justify-center py-12 xl:py-0">
-      <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row xl:gap-[30px]">
-          <div className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
-            <div className="flex flex-col gap-[30px] h-[50%]">
-              <div className="text-8xl leading-none font-extrabold text-transparent text-outline dark:text-outline-dark ">
-                {project.num}
-              </div>
-              <h2 className="text-[42px] font-bold leading-none text-primary dark:text-white group-hover:text-accent transition-all duration-500 capitalize">
-                {project.title} 
-              </h2>
-              <p className="text-primary/60 dark:text-white/60">{project.description}</p>
-              <ul className="flex gap-4">
-                {project.stack.map((item, index) => (
-                  <li key={index} className="text-xl text-accent">
-                    {item.name}
-                    {index !== project.stack.length - 1 && ","}
-                  </li>
-                ))}
-              </ul>
-              <div className="border border-white/20"></div>
-              <div className="flex items-center gap-4">
-                <Link  href={project.live} target="_blank" rel="noopener noreferrer">
-                  <TooltipProvider delayDuration={100}>
-                    <Tooltip>
-                      <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-primary/5 dark:bg-white/5 flex justify-center items-center group">
-                        <BsArrowUpRight className="text-primary dark:text-white text-3xl group-hover:text-accent" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>live project</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </Link>
-                {project.github && (
-                  <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                    <TooltipProvider delayDuration={100}>
-                      <Tooltip>
-                        <TooltipTrigger className="w-[70px] h-[70px] rounded-full bg-primary/5 dark:bg-white/5 flex justify-center items-center group">
-                          <BsGithub className="text-primary dark:text-white text-3xl group-hover:text-accent" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>github repository</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="w-full xl:w-[50%]">
-            <Swiper 
-              spaceBetween={30} 
-              slidesPerView={1} 
-              className="xl:h-[520px] mb-12" 
-              onSlideChange={handleSlideChange}
-            >
-              {projects.map((project, index) => (
-                <SwiperSlide key={index} className="w-full">
-                  <div className="h-[440px] relative group flex justify-center items-center bg-pink-50/20">
-                    <div className="absolute top-0 bottom-0 w-full bg-black/10 z-10"></div>
-                    <div className="relative w-full h-full">
-                      <Image 
-                        src={project.image}
-                        fill
-                        className="object-cover"
-                        alt="" 
-                      />
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-              <WorkSlideBtns 
-                containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%-22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-                btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] flex justify-center items-center transition-all rounded-full w-[50px] h-[50px] p-2"
-              />
-            </Swiper>
-          </div>
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, delay: (index % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className={`card card-glow group overflow-hidden flex flex-col ${
+        featured ? `lg:col-span-2 ${reversed ? "lg:flex-row-reverse" : "lg:flex-row"}` : ""
+      }`}
+    >
+      {/* image */}
+      <Link
+        href={project.live}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${project.title} live`}
+        className={`relative block overflow-hidden m-3 rounded-2xl bg-fg/5 ${
+          featured ? "aspect-[16/10] lg:aspect-auto lg:w-[58%] lg:min-h-[400px]" : "aspect-[16/10]"
+        }`}
+      >
+        <Image
+          src={project.image}
+          fill
+          sizes={featured ? "(min-width: 960px) 700px, 100vw" : "(min-width: 960px) 560px, 100vw"}
+          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+          alt={`Screenshot of ${project.title}`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white text-black px-4 py-2 text-sm font-semibold opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+          View live <BsArrowUpRight />
+        </span>
+      </Link>
+
+      {/* info */}
+      <div className={`flex flex-col flex-1 p-6 pt-3 ${featured ? "lg:p-10 lg:justify-center" : ""}`}>
+        <div className="flex items-center justify-between gap-4">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-accent">{project.category}</span>
+          <span className="font-display text-5xl font-extrabold text-transparent text-outline leading-none opacity-40 group-hover:opacity-100 group-hover:text-outline-hover transition-opacity">
+            {project.num}
+          </span>
+        </div>
+        <h3 className={`mt-3 font-display font-bold tracking-tight ${featured ? "text-4xl xl:text-5xl" : "text-3xl"}`}>
+          {project.title}
+        </h3>
+        <p className="mt-3 text-muted">{project.description}</p>
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <li key={tech} className="chip">
+              {tech}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 pt-6 border-t border-line/10 flex items-center gap-3">
+          <IconLink href={project.live} label="Live project">
+            <BsArrowUpRight />
+          </IconLink>
+          {project.github && (
+            <IconLink href={project.github} label="GitHub repository">
+              <BsGithub />
+            </IconLink>
+          )}
         </div>
       </div>
-    </div>
-  )
-}
+    </motion.article>
+  );
+};
 
-export default Work
+const Work = () => {
+  return (
+    <div className="container mx-auto">
+      <div className="flex flex-col xl:flex-row xl:items-end xl:justify-between">
+        <SectionHeading
+          index="02"
+          eyebrow="Selected work"
+          title="Things I've"
+          highlight="built."
+          description="A few projects I designed and developed — from platforms to dashboards and online stores."
+        />
+        <Link
+          href="https://github.com/sewarMsiyam"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden xl:inline-flex mb-16 items-center gap-2 font-mono text-sm text-fg/70 hover:text-accent transition-colors"
+        >
+          More on GitHub <BsArrowUpRight />
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {projects.map((project, index) => (
+          <ProjectCard key={project.num} project={project} index={index} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Work;
